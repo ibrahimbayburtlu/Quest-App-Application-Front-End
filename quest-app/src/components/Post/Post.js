@@ -1,42 +1,17 @@
-import React, {useState,useEffect} from "react";
-import ReactDom from "react-dom";
+import React from "react";
+import "./Post.scss";
 
+function Post(props){
 
-function Post(){
-    const [error, setError] = useState(null);
-    const [isLoaded,setIsLoaded] = useState(false);
-    const [postList, setPostList] = useState([]);
+    const {title,text} = props;
 
-    useEffect(() => {
-        fetch("https://localhost:8080/posts")
-        .then(res => res.json(
-            (result) => {
-                setIsLoaded(true);
-                setPostList(result);
-            },
-            (error) => {
-                isLoaded(true);
-                setError(error);
-            }
-        ))
-    },[])
+    return(
+        <div className="postContainer">
+            {title}
+            {text}
+        </div>
+    )
 
-    if(error){
-        return <div> error </div>
-    }else if(!isLoaded){
-        return <div> Loading... </div>
-    }else{
-        return(
-            <ul>
-                {postList.map(post =>(
-                    <li>
-                        {post.title} {post.text}
-                    </li>
-                ))}
-            </ul>
-        );
-    }
 }
-
 
 export default Post;
